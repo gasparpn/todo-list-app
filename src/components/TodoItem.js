@@ -1,33 +1,36 @@
 import React, { useState } from 'react'
 import TodoForm from './TodoForm'
-import { RiCloseCircleLine } from 'react-icons/ri'
-import { TiEdit } from 'react-icons/ti'
+import { AiFillEdit, AiFillDelete, AiOutlineFileDone } from 'react-icons/ai'
 
-function TodoItem({ todo, completeTodo, removeTodo, updateTodo }) {
+function TodoItem({ todo, removeTodo, updateTodo, markAsDone }) {
 
   const [edit, setEdit] = useState({
     id: null,
-    text: '',
+    title: '',
     status: '',
     scheduledFor: null,
+    finishedAt: null,
   });
 
   const submitUpdate = newTodo => {
     updateTodo(edit.id, newTodo);
     setEdit({
       id: null,
-      text: '',
+      title: '',
       status: '',
       scheduledFor: null,
+      finishedAt: null,
     });
   };
 
   const handleEditClick = todo => {
     setEdit({
       id: todo.id,
-      text: todo.text,
+      title: todo.title,
       status: todo.status,
-      scheduledFor: todo.scheduledFor
+      scheduledFor: todo.scheduledFor,
+      finishedAt: todo.finishedAt,
+      timeSpend: todo.timeSpend,
     })
   }
 
@@ -36,21 +39,23 @@ function TodoItem({ todo, completeTodo, removeTodo, updateTodo }) {
   }
 
   return (
-    <div
-      className={todo.isComplete ? '' : ''}
-    >
-      <div onClick={() => completeTodo(todo.id)}>
-        {todo.text}
-      </div>
+    <div>
       <div>{todo.scheduledFor}</div>
       <div>{todo.status}</div>
+      {todo.status === "DONE" && todo.timeSpend ? (
+        <div>{todo.timeSpend}</div>
+      ) : ''}
       <div className='icons'>
-        <RiCloseCircleLine
+        <AiFillDelete
           onClick={() => removeTodo(todo.id)}
           className='delete-icon'
         />
-        <TiEdit
+        <AiFillEdit
           onClick={() => handleEditClick(todo)}
+          className='edit-icon'
+        />
+        <AiOutlineFileDone
+          onClick={() => markAsDone(todo.id, todo)}
           className='edit-icon'
         />
       </div>

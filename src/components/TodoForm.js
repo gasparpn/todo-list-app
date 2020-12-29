@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
+import DateTimePicker from 'react-datetime-picker';
+import moment from 'moment';
+
 
 function TodoForm(props) {
-  const [text, setText] = useState(props.edit ? props.edit.value : '');
-  const [scheduledFor, setScheduledFor] = useState(null);
+  const [title, setTitle] = useState(props.edit ? props.edit.value : "");
+  const [scheduledFor, setScheduledFor] = useState("");
+  const [scheduledAt, setScheduledAt] = useState("");
+  const [finishedAt, setfinishedAt] = useState("");
+  const [timeSpend, settimeSpend] = useState("");
   const [status, setStatus] = useState("");
 
-  const handleTextChange = e => {
-    setText(e.target.value);
+  const handleTitleChange = e => {
+    setTitle(e.target.value);
   };
 
   const handleDateChange = e => {
-    setScheduledFor(e.target.value);
+    setScheduledFor(e);
   }
 
   const handleStatusChange = e => {
@@ -19,36 +25,35 @@ function TodoForm(props) {
 
   const handleSubmit = e => {
     e.preventDefault();
-
+    let moment = require('moment-timezone');
     props.onSubmit({
-      id: Math.floor(Math.random() * 10000),
-      text: text,
+      title: title,
       scheduledFor: scheduledFor,
+      scheduledAt: moment().tz("America/Sao_Paulo").format("YYYY-MM-DDTHH:mm:ss"),
       status: status,
     });
-    setText("");
-    setScheduledFor(null);
+    setTitle("");
+    setScheduledFor("");
     setStatus("");
+    setScheduledAt("");
+    settimeSpend("");
+    setfinishedAt("");
   };
 
   return (
-    <form onSubmit={handleSubmit} className=''>
+    <form className=''>
       {props.edit ? (
         <>
           <input
             placeholder="Update your item"
-            value={text}
-            onChange={handleTextChange}
-            name="text"
+            value={title}
+            onChange={handleTitleChange}
+            name="title"
             className=''
           />
-          <input
-            placeholder="Update your item scheduled date"
-            type="date"
-            value={scheduledFor}
+          <DateTimePicker
             onChange={handleDateChange}
-            name="scheduled date"
-            className=''
+            value={scheduledFor}
           />
           <select
             name="status"
@@ -56,7 +61,7 @@ function TodoForm(props) {
             onChange={handleStatusChange}
           >
             <option>Status</option>
-            {["TODO", "DOING", "DONE"].map(
+            {["TODO", "DOING"].map(
               (value, index) => (
                 <option key={index} value={value}>{value}</option>
               )
@@ -70,18 +75,15 @@ function TodoForm(props) {
           <>
             <input
               placeholder="Add a todo"
-              value={text}
-              onChange={handleTextChange}
-              name="text"
+              value={title}
+              onChange={handleTitleChange}
+              name="title"
               className=""
             />
-            <input
-              placeholder="Add your item scheduled date"
-              type="date"
-              value={scheduledFor}
+            <DateTimePicker
               onChange={handleDateChange}
-              name="scheduled date"
-              className=''
+              value={scheduledFor}
+              format="yyyy-MM-dd hh:mm:s"
             />
             <select
               name="status"
@@ -89,7 +91,7 @@ function TodoForm(props) {
               onChange={handleStatusChange}
             >
               <option>Status</option>
-              {["TODO", "DOING", "DONE"].map(
+              {["TODO", "DOING"].map(
                 (value, index) => (
                   <option key={index} value={value}>{value}</option>
                 )

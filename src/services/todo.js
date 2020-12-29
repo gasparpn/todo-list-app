@@ -15,7 +15,6 @@ async function listTodoItems() {
 }
 
 async function createTodoItem(todoItem) {
-  console.log(todoItem);
   const response = await api.post('todo/', todoItem);
   return response.data;
 }
@@ -23,12 +22,10 @@ async function createTodoItem(todoItem) {
 async function updateTodoItem(id, todoItem) {
   todoItem.id = id;
   const response = await api.put('todo/', todoItem);
-  console.log(response.data);
   return response.data;
 }
 
 async function deleteTodoItem(id) {
-  console.log(id);
   const response = await api.delete(`todo/${id}`)
   return response.data
 }
