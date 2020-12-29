@@ -39,24 +39,25 @@ function TodoItem({ todo, removeTodo, updateTodo, markAsDone }) {
   }
 
   return (
-    <div>
-      <div>{todo.scheduledFor}</div>
-      <div>{todo.status}</div>
-      {todo.status === "DONE" && todo.timeSpend ? (
-        <div>{todo.timeSpend}</div>
-      ) : ''}
-      <div className='icons'>
+    <div className="row">
+      <div className="col-md-4">{todo.title}</div>
+      <div className="col-md-2">{todo.scheduledFor}</div>
+      <div className="col-md-2">{todo.status}</div>
+      <div className="col-md-2">
+        {todo.status === "DONE" && todo.timeSpend ? todo.timeSpend : ''}
+      </div>
+      <div className="col col-sm col-md-2">
         <AiFillDelete
           onClick={() => removeTodo(todo.id)}
-          className='delete-icon'
+          title="Delete Item"
         />
         <AiFillEdit
           onClick={() => handleEditClick(todo)}
-          className='edit-icon'
+          title="Update Item"
         />
         <AiOutlineFileDone
           onClick={() => markAsDone(todo.id, todo)}
-          className='edit-icon'
+          title="Mark as Done"
         />
       </div>
     </div>

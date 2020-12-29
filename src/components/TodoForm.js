@@ -41,20 +41,33 @@ function TodoForm(props) {
   };
 
   return (
-    <form className=''>
-      {props.edit ? (
-        <>
-          <input
-            placeholder="Update your item"
-            value={title}
-            onChange={handleTitleChange}
-            name="title"
-            className=''
-          />
-          <DateTimePicker
-            onChange={handleDateChange}
-            value={scheduledFor}
-          />
+    <form className="form-inline">
+      <div class="input-group">
+        <div className="form-group mx-3">
+          <label>
+            Description:
+                <input
+              className="ml-2"
+              placeholder={props.edit ? "Update your descriptio" : "Add a description"}
+              value={title}
+              onChange={handleTitleChange}
+              name="title"
+              type="text"
+            />
+          </label>
+        </div>
+        <div className="form-group mx-3">
+          <label>
+            Schedule for:
+                  <DateTimePicker
+              className="ml-2"
+              onChange={handleDateChange}
+              value={scheduledFor}
+              format="yyyy-MM-dd hh:mm:s"
+            />
+          </label>
+        </div>
+        <div className="form-group mx-3">
           <select
             name="status"
             value={status}
@@ -67,41 +80,11 @@ function TodoForm(props) {
               )
             )}
           </select>
-          <button onClick={handleSubmit} className="">
-            Update
+        </div>
+        <button onClick={handleSubmit} className="btn btn-primary">
+          Add todo
           </button>
-        </>
-      ) : (
-          <>
-            <input
-              placeholder="Add a todo"
-              value={title}
-              onChange={handleTitleChange}
-              name="title"
-              className=""
-            />
-            <DateTimePicker
-              onChange={handleDateChange}
-              value={scheduledFor}
-              format="yyyy-MM-dd hh:mm:s"
-            />
-            <select
-              name="status"
-              value={status}
-              onChange={handleStatusChange}
-            >
-              <option>Status</option>
-              {["TODO", "DOING"].map(
-                (value, index) => (
-                  <option key={index} value={value}>{value}</option>
-                )
-              )}
-            </select>
-            <button onClick={handleSubmit} className=''>
-              Add todo
-          </button>
-          </>
-        )}
+      </div>
     </form>
   );
 }

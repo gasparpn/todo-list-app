@@ -70,20 +70,33 @@ function TodoList() {
   return (
     <>
       { errorMessage &&
-        <h4 className="error"> {errorMessage} </h4>}
-      <h1>Bravi Todo List</h1>
-      <TodoForm onSubmit={addTodo} />
-      {todos.map(
-        (todo, index) => (
-          <TodoItem
-            key={index}
-            todo={todo}
-            removeTodo={removeTodo}
-            updateTodo={updateTodo}
-            markAsDone={markAsDone}
-          />
-        )
-      )}
+        <h4 className="text-center mb-5"> {errorMessage} </h4>}
+
+
+      <div className="container">
+        <h1 className="text-center mb-5">Bravi Todo List</h1>
+        <TodoForm onSubmit={addTodo} />
+        <div className="row mt-5">
+          <div className="col-md-4 font-weight-bold">Description</div>
+          <div className="col-md-2 font-weight-bold">Scheduled For</div>
+          <div className="col-md-2 font-weight-bold">Status</div>
+          <div className="col-md-2 font-weight-bold">Time Spend</div>
+          <div className="col-md-2 font-weight-bold">Options</div>
+        </div>
+        {todos.map(
+          (todo, index) => (
+            <div className="mt-5">
+              <TodoItem
+                key={index}
+                todo={todo}
+                removeTodo={removeTodo}
+                updateTodo={updateTodo}
+                markAsDone={markAsDone}
+              />
+            </div>
+          )
+        )}
+      </div>
     </>
   );
 }
